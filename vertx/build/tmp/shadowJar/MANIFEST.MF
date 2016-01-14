@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Main-Verticle: com.github.vertx.node.example.HelloWorldVerticle
+
