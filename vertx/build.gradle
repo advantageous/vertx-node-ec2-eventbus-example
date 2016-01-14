@@ -1,0 +1,40 @@
+group 'rickhigh'
+version '1.0-SNAPSHOT'
+
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '1.2.2'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url = 'http://oss.sonatype.org/content/repositories/snapshots/'
+    }
+    mavenLocal() /* Just in case we want to use local artifacts that we build locally. */
+}
+
+vertxVersion = '3.2.0'
+sourceCompatibility = '1.8'
+mainClassName = 'io.vertx.core.Launcher'
+
+dependencies {
+    compile "io.vertx:vertx-core:$vertxVersion"
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+/* used to create the fat jar files. */
+shadowJar {
+    classifier = 'fat'
+    manifest {
+        attributes 'Main-Verticle': 'io.vertx.example.HelloWorldVerticle'
+    }
+    mergeServiceFiles {
+        include 'META-INF/services/io.vertx.core.spi.VerticleFactory'
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.8'
+}
