@@ -1,0 +1,9 @@
+
+.gradle/
+.idea/
+settings.gradle
+vertx-node-ec2-eventbus-example.iml
+.idea/gradle.xml
+.idea/vcs.xml
+.idea/gradle.xml
+gradlew.bat
