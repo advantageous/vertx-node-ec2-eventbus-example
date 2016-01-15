@@ -8,3 +8,5 @@ vertx-node-ec2-eventbus-example.iml
 .idea/gradle.xml
 
 vertx-node-ec2-eventbus-example.iml
+
+vertx/build/*
