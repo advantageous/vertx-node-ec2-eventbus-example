@@ -54,10 +54,9 @@ public class MainVerticle : AbstractVerticle() {
 
     }
 
-    companion object {
-        @JvmStatic fun main(args: Array<String>) {
-            val vertx = Vertx.vertx()
-            vertx.deployVerticle(MainVerticle())
-        }
-    }
+}
+
+fun main(args: Array<String>) {
+    val vertx = Vertx.vertx()
+    vertx.deployVerticle(MainVerticle())
 }

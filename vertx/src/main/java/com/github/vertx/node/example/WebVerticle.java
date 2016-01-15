@@ -13,7 +13,7 @@ public class WebVerticle extends AbstractVerticle {
     @Override
     public void start() {
         vertx.createHttpServer()
-                .requestHandler(httpRequest -> handleHttpRequest(httpRequest) )
+                .requestHandler(this::handleHttpRequest)
                 .listen(8080);
     }
 
@@ -28,6 +28,7 @@ public class WebVerticle extends AbstractVerticle {
                 httpRequest.response().end(response.result().body().toString());
             } else {
                 logger.error("Can't send message to hello service", response.cause());
+                //noinspection ThrowableResultOfMethodCallIgnored
                 httpRequest.response().setStatusCode(500).end(response.cause().getMessage());
             }
         });
