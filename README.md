@@ -9,6 +9,8 @@ in this example. We also plan on using Vert.x built-in clustering and discovery 
 to configure [Hazelcast](https://hazelcast.com/) to work in EC2. We plan on using [gradle](http://gradle.org/) 
 for the build. 
 
+Note: Don't delete the branches. There are steps in there that correspond to Wiki pages.
+
 Another feature of Vert.x 3 that we want to use is [Service Proxies](http://vertx.io/docs/vertx-service-proxy/) 
 and [Service Factories](http://vertx.io/docs/vertx-service-factory/). This should allow us to create client stubs in 
 JS which will allows us to make async call services written in ***Vert.x/Java/Kotlin*** from ***JavaScript/Node*** 
