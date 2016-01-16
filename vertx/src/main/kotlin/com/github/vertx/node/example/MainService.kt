@@ -55,8 +55,3 @@ public class MainVerticle : AbstractVerticle() {
     }
 
 }
-
-fun main(args: Array<String>) {
-    val vertx = Vertx.vertx()
-    vertx.deployVerticle(MainVerticle())
-}
