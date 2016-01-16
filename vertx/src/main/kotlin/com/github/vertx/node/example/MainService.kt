@@ -28,7 +28,7 @@ public class MainVerticle : AbstractVerticle() {
 
 
 
-        verticles.forEach { verticle->
+        verticles.forEach { verticle ->
             vertx.deployVerticle(verticle) { deployResponse ->
 
                 if (deployResponse.failed()) {
