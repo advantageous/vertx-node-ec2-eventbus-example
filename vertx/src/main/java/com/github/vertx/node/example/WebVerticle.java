@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 public class WebVerticle extends AbstractVerticle {
 
-
     private final Logger logger = LoggerFactory.getLogger(WebVerticle.class);
 
     @Override
@@ -34,4 +33,3 @@ public class WebVerticle extends AbstractVerticle {
         });
     }
 }
-
