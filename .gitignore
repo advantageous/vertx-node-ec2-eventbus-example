@@ -14,3 +14,9 @@ vertx/build/*
 node/node_modules/
 
 node/node.iml
+
+*.iml
+
+*.ipr
+
+*.iws
