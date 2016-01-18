@@ -2,6 +2,7 @@ var http = require('http');
 var EventBus = require('vertx3-eventbus-client');
 var eventBus = new EventBus("http://localhost:8080/eventbus/");
 
+/** Don't call until the event bus is open. */
 function onopenEventBus() {
 
       //Call using event bus.
