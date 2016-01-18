@@ -1,7 +1,7 @@
 var http = require('http');
 var EventBus = require('vertx3-eventbus-client');
 
-var eventBus = new EventBus("http://localhost:8080/eventbus");
+var eventBus = new EventBus("http://localhost:8080/eventbus/");
 
 eventBus.send("HELLO_WORLD",
         "SAY_HELLO_WORLD", function(response) {
