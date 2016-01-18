@@ -38,7 +38,7 @@ class HelloWorldVerticle : AbstractVerticle() {
                 }
             }
         } catch (ex: Exception) {
-            logger.error("Unable to handle operation due to exception" + message.body(), ex)
+            logger.error("Unable to handle operation due to exception ${message.body()}", ex)
         }
     }
 
