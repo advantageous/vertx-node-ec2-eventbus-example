@@ -1,14 +1,18 @@
 {
-  "name": "node-2-vertx",
-  "version": "1.0.0",
-  "description": "Call Vertx",
-  "main": "run.js",
+  "name": "node",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "test": "test"
+    "start": "node ./bin/www"
   },
-  "author": "Rick Hightower",
-  "license": "ISC",
   "dependencies": {
+    "body-parser": "~1.13.2",
+    "cookie-parser": "~1.3.5",
+    "debug": "~2.2.0",
+    "express": "~4.13.1",
+    "jade": "~1.11.0",
+    "morgan": "~1.6.1",
+    "serve-favicon": "~2.3.0",
     "http": "0.0.0",
     "sockjs-client": "^1.0.3",
     "vertx3-eventbus-client": "^3.2.0"

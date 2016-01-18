@@ -12,3 +12,5 @@ vertx-node-ec2-eventbus-example.iml
 vertx/build/*
 
 node/node_modules/
+
+node/node.iml
