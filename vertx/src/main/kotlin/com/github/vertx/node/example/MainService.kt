@@ -12,9 +12,7 @@ enum class Services {
     HELLO_WORLD
 }
 
-
 public class MainVerticle : AbstractVerticle() {
-
 
     private val logger = LoggerFactory.getLogger(MainVerticle::class.java)
 
@@ -27,8 +25,7 @@ public class MainVerticle : AbstractVerticle() {
         val verticles = Arrays.asList(HelloWorldVerticle(), WebVerticle())
 
 
-
-        verticles.forEach { verticle->
+        verticles.forEach { verticle ->
             vertx.deployVerticle(verticle) { deployResponse ->
 
                 if (deployResponse.failed()) {
@@ -40,7 +37,6 @@ public class MainVerticle : AbstractVerticle() {
                 }
             }
         }
-
 
         /** Wake up in five seconds and check to see if we are deployed if not complain.  */
         vertx.setTimer(TimeUnit.SECONDS.toMillis(5)) { event ->
@@ -54,9 +50,4 @@ public class MainVerticle : AbstractVerticle() {
 
     }
 
-}
-
-fun main(args: Array<String>) {
-    val vertx = Vertx.vertx()
-    vertx.deployVerticle(MainVerticle())
 }

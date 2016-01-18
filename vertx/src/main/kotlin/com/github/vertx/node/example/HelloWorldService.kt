@@ -13,6 +13,7 @@ enum class HelloWorldOperations {
 class HelloWorldVerticle : AbstractVerticle() {
 
     private val logger = LoggerFactory.getLogger(HelloWorldVerticle::class.java)
+
     override fun start() {
         vertx.eventBus().consumer<Any>(Services.HELLO_WORLD.toString()) { message -> dispatchMessage(message) }
     }

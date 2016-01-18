@@ -7,7 +7,6 @@ buildscript {
     }
 }
 
-
 plugins {
     id 'java'
     id 'application'
@@ -15,12 +14,10 @@ plugins {
     id 'idea'
 }
 
-
 apply plugin: "kotlin"
 
 group 'rickhigh'
 version '1.0-SNAPSHOT'
-
 
 idea {
     project {
@@ -34,7 +31,6 @@ repositories {
     }
     mavenLocal() /* Just in case we want to use local artifacts that we build locally. */
 }
-
 
 sourceCompatibility = '1.8'
 mainClassName = 'io.vertx.core.Launcher'
