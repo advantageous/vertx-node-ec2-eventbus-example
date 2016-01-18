@@ -25,11 +25,9 @@ public class WebVerticle extends AbstractVerticle {
         router.route("/hello/*").handler(event -> handleHttpRequest(event.request()));
 
 
-        final BridgeOptions options = new BridgeOptions().
-                addOutboundPermitted(
-                        new PermittedOptions().
-                                setAddress("metrics")
-                );
+        final BridgeOptions options = new BridgeOptions()
+                .addInboundPermitted(
+                        new PermittedOptions().setAddress(Services.HELLO_WORLD.toString()));
 
         router.route("/eventbus/*").handler(SockJSHandler.create(vertx).bridge(options));
 

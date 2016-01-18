@@ -1,19 +1,23 @@
 var http = require('http');
 var EventBus = require('vertx3-eventbus-client');
-
 var eventBus = new EventBus("http://localhost:8080/eventbus/");
 
-eventBus.send("HELLO_WORLD",
-        "SAY_HELLO_WORLD", function(response) {
+function onopenEventBus() {
 
-    if (response.succeeded()) {
-        /* Send the result to the http connection. */
-        console.log(response.result.body);
-    } else {
-        console.log("Can't send message to hello service " + response.cause);
-    }
-});
+      //Call using event bus.
+      eventBus.send("HELLO_WORLD",
+              "SAY_HELLO_WORLD", function(response, json) {
+              console.log(json.body);
+      });
+}
 
+eventBus.onopen = onopenEventBus;
+
+
+
+
+
+//Call using REST
 var options = {
   host: 'localhost',
   path: '/hello',
