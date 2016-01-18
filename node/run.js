@@ -12,11 +12,14 @@ function onopenEventBus() {
       });
 }
 
+/** Get notified of errors. */
+function onerrorEventBus(error) {
+  console.log("Problem calling event bus " + error)
+}
+
+
 eventBus.onopen = onopenEventBus;
-
-
-
-
+eventBus.onerror = onerrorEventBus;
 
 //Call using REST
 var options = {
