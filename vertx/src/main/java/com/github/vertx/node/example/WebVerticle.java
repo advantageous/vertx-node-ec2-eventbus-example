@@ -28,14 +28,17 @@ public class WebVerticle extends AbstractVerticle {
     public void start() {
 
 
+        /* Create the hello world service. */
         final HelloWorldServiceImpl helloWorldService = new HelloWorldServiceImpl();
-        // Register the handler
+
+        /* Register the proxy implementation. */
         ProxyHelper.registerService(HelloWorldServiceInterface.class, vertx,
                 helloWorldService, HELLO_WORLD_SERVICE);
 
         /* Create vertx web router. */
         final Router router = Router.router(vertx);
 
+        /* Create the proxy interface to HelloWorldService. */
         helloWorldServiceInterface = ProxyHelper.createProxy(HelloWorldServiceInterface.class, vertx,
                 HELLO_WORLD_SERVICE);
 
@@ -43,7 +46,7 @@ public class WebVerticle extends AbstractVerticle {
         /* Install our original "REST" handler at the /hello/ uri. */
         router.route("/hello/*").handler(event -> handleHttpRequestToHelloWorld(event.request()));
 
-        /** */
+        /* Register a new handler that uses the proxy. */
         router.route("/hello-world/*").handler(event -> handleCallToHelloWorldProxy(event.request()));
 
 
@@ -53,7 +56,6 @@ public class WebVerticle extends AbstractVerticle {
         final BridgeOptions options = new BridgeOptions()
                 .addInboundPermitted(
                         new PermittedOptions().setAddress(Services.HELLO_WORLD.toString()))
-
                 .addInboundPermitted(new PermittedOptions().setAddress(HELLO_WORLD_SERVICE))
                 .addOutboundPermitted(new PermittedOptions().setAddress(HELLO_WORLD_SERVICE));
 
@@ -67,11 +69,12 @@ public class WebVerticle extends AbstractVerticle {
     }
 
     /**
-     * Handle call to hello world service
+     * Handle call to hello world service proxy from REST
      * @param httpRequest httpRequest
      */
     private void handleCallToHelloWorldProxy(final HttpServerRequest httpRequest) {
 
+        /** Call the service proxy interface for Hello World. */
         helloWorldServiceInterface.hello(httpRequest.getParam("msg"), response -> {
             if (response.succeeded()) {
                 logger.debug("Successfully invoked HelloWorldService Proxy to service {}", response.result());
