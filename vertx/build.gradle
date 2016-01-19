@@ -91,6 +91,6 @@ compileJava{
     source    += sourceSets.generated.java
     // specify javac arguments
     options.compilerArgs = [
-            "-Acodetrans.output=${projectDir}/src/generated"
+            "-Acodetrans.output=${projectDir}/src/main"
     ]
 }
