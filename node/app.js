@@ -1,3 +1,4 @@
+var http = require('http');
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -5,10 +6,21 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+// initialize the event bus when we initialize the server
+var EventBus = require('vertx3-eventbus-client');
+// this will typically come from a config, but this will suffice for now
+var eventBus = new EventBus("http://localhost:8080/eventbus/");
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+// add application middleware to pass eventbus to controllers
+app.use(function(req, res, next) {
+  req.eventBus = eventBus;
+  next();
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -56,5 +68,10 @@ app.use(function(err, req, res, next) {
   });
 });
 
-
-module.exports = app;
+// create the Express web server once the event bus is ready so we know we can use it straight away.
+eventBus.onopen = function() {
+  // this will now expose an Express web server on port 3000
+  http.createServer(app).listen(3000, function() {
+    console.log('Express server listening on port 3000');
+  });
+};

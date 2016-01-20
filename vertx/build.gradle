@@ -19,6 +19,13 @@ apply plugin: "kotlin"
 group 'rickhigh'
 version '1.0-SNAPSHOT'
 
+sourceSets {
+    generated{
+        java.srcDir "${projectDir}/src/generated/java"
+    }
+}
+
+
 idea {
     project {
         languageLevel = '1.8'
@@ -43,6 +50,9 @@ dependencies {
     compile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.0-beta-4584'
     compile 'io.vertx:vertx-tcp-eventbus-bridge:3.2.0'
     compile 'io.vertx:vertx-web:3.2.0'
+    compile 'io.vertx:vertx-service-proxy:3.2.0'
+    compile 'io.vertx:vertx-lang-js:3.2.0'
+    compile 'io.vertx:vertx-codegen:3.2.0'
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
@@ -59,4 +69,28 @@ shadowJar {
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.9'
+}
+
+
+task generateProxies(type: JavaCompile, group: 'build', description: 'Generates the Vertx proxies') {
+    source = sourceSets.main.java // input source set
+    classpath = configurations.compile //+ configurations.vertx // add processor module to classpath
+    // specify javac arguments
+    options.compilerArgs = [
+            "-proc:only",
+            "-processor", "io.vertx.codegen.CodeGenProcessor", // vertx processor here
+            "-AoutputDirectory=${projectDir}/src/main"
+    ]
+    // specify output of generated code
+    destinationDir = file("${projectDir}/src/generated/java")
+}
+
+
+compileJava{
+    dependsOn(generateProxies)
+    source    += sourceSets.generated.java
+    // specify javac arguments
+    options.compilerArgs = [
+            "-Acodetrans.output=${projectDir}/src/main"
+    ]
 }
