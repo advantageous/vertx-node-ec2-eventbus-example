@@ -6,7 +6,8 @@ import org.slf4j.LoggerFactory
 
 enum class HelloWorldOperations {
 
-    SAY_HELLO_WORLD
+    SAY_HELLO_WORLD,
+    BROADCAST_HELLO_TO_ALL_NODES
 }
 
 
@@ -32,6 +33,8 @@ class HelloWorldVerticle : AbstractVerticle() {
             /** Switch statement that handles various operations. */
             when (operation) {
                 HelloWorldOperations.SAY_HELLO_WORLD -> message.reply("HELLO WORLD FROM KOTLIN")
+
+                HelloWorldOperations.BROADCAST_HELLO_TO_ALL_NODES -> println("GOT HELLO BROADCAST!!!!!!!!!!!!!")
                 else -> {
                     logger.error("Unable to handle operation {}", operation)
                     message.reply("Unsupported operation")

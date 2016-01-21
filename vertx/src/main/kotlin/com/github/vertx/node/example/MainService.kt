@@ -2,6 +2,8 @@ package com.github.vertx.node.example
 
 import io.vertx.core.AbstractVerticle
 import io.vertx.core.Vertx
+import io.vertx.core.VertxOptions
+import io.vertx.spi.cluster.impl.zookeeper.ZookeeperClusterManager
 import org.slf4j.LoggerFactory
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -53,6 +55,27 @@ public class MainVerticle : AbstractVerticle() {
 }
 
 fun main(args: Array<String>) {
-    val vertx = Vertx.vertx()
-    vertx.deployVerticle(MainVerticle())
+
+
+    val logger = LoggerFactory.getLogger(MainVerticle::class.java)
+    val zkConfig = Properties();
+    zkConfig.setProperty("hosts.zookeeper", "127.0.0.1");
+    zkConfig.setProperty("path.root", "io.vertx");
+    zkConfig.setProperty("retry.initialSleepTime", "1000");
+    zkConfig.setProperty("retry.intervalTimes", "3");
+
+    val clusterManager =  ZookeeperClusterManager(zkConfig);
+    val options =  VertxOptions().setClusterManager(clusterManager);
+
+    Vertx.clusteredVertx(options) { response ->
+        if (response.succeeded()) {
+            val vertx = response.result();
+            vertx.deployVerticle(MainVerticle())
+            logger.info("Main is deployed")
+        } else {
+            logger.error("Issue deploying main", response.cause())
+        }
+    }
+
+
 }

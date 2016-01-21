@@ -53,6 +53,7 @@ dependencies {
     compile 'io.vertx:vertx-service-proxy:3.2.0'
     compile 'io.vertx:vertx-lang-js:3.2.0'
     compile 'io.vertx:vertx-codegen:3.2.0'
+    compile 'io.vertx:vertx-zookeeper:3.2.0-SNAPSHOT'
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
@@ -93,4 +94,15 @@ compileJava{
     options.compilerArgs = [
             "-Acodetrans.output=${projectDir}/src/main"
     ]
+}
+
+task runShadowJar(dependsOn: shadowJar,  description: 'Runs the system executing the shadow jar.')  {
+    def arguments = ["$buildDir/libs/$project.name-$version-fat.jar", "-cluster"]
+    def jvmArguments = ["-Dvertx.cluster.managerClass=io.vertx.spi.cluster.impl.zookeeper.ZookeeperClusterManager"]
+
+    javaexec {
+        main = "-jar"
+        jvmArgs jvmArguments
+        args arguments
+    }
 }

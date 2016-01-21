@@ -1,8 +1,6 @@
 package com.github.vertx.node.example;
 
 import io.vertx.core.AbstractVerticle;
-import io.vertx.core.AsyncResult;
-import io.vertx.core.Handler;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.sockjs.BridgeOptions;
@@ -49,6 +47,8 @@ public class WebVerticle extends AbstractVerticle {
         /* Register a new handler that uses the proxy. */
         router.route("/hello-world/*").handler(event -> handleCallToHelloWorldProxy(event.request()));
 
+        /* Register a new handler to send broadcast message. */
+        router.route("/broadcast/*").handler(event -> broadcastHello(event.request()));
 
 
         /* Allow Hello World service to be exposed to Node.js.
@@ -66,6 +66,13 @@ public class WebVerticle extends AbstractVerticle {
         vertx.createHttpServer()
                 .requestHandler(router::accept)
                 .listen(8080);
+    }
+
+    private void broadcastHello(HttpServerRequest request) {
+        vertx.eventBus().publish(Services.HELLO_WORLD.toString(),
+                HelloWorldOperations.BROADCAST_HELLO_TO_ALL_NODES.toString());
+
+        request.response().end("SENT BROADCAST");
     }
 
     /**
