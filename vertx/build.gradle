@@ -1,9 +1,11 @@
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.0-beta-4584'
+        classpath 'se.transmode.gradle:gradle-docker:1.2'
     }
 }
 
@@ -15,9 +17,35 @@ plugins {
 }
 
 apply plugin: "kotlin"
+apply plugin: 'docker'
 
-group 'rickhigh'
-version '1.0-SNAPSHOT'
+
+group 'advantageous'
+version '1.0'
+
+docker {
+    baseImage "vertx/vertx3-exec"
+    maintainer 'Rick Hightower "richardhightower@gmail.com"'
+
+
+
+}
+
+task buildDocker(type: Docker) {
+
+        tagVersion = System.getenv("BUILD_NUMBER") ?: project.version
+        push = Boolean.getBoolean("docker.push")
+        applicationName = project.applicationName
+
+        addFile {
+            from "${project.shadowJar.outputs.files.singleFile}"
+            into "/opt/hello/"
+        }
+        exposePort 8080
+        entryPoint = ["sh",  "-c"]
+        defaultCommand = ["java -jar /opt/hello/${project.name}-${project.version}-fat.jar"]
+
+}
 
 sourceSets {
     generated{
