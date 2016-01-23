@@ -35,7 +35,7 @@ task buildDocker(type: Docker) {
 
         tagVersion = System.getenv("BUILD_NUMBER") ?: project.version
         push = Boolean.getBoolean("docker.push")
-        applicationName = project.applicationName
+        applicationName = "vertx-node-eventbus-example"
 
         addFile {
             from "${project.shadowJar.outputs.files.singleFile}"
