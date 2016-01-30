@@ -21,7 +21,7 @@ apply plugin: 'docker'
 
 
 group 'advantageous'
-version '1.0'
+version '1.0.1.3'
 
 docker {
     baseImage "vertx/vertx3-exec"
@@ -74,6 +74,7 @@ dependencies {
     compile "io.vertx:vertx-core:3.2.0"
     compile 'ch.qos.logback:logback-core:1.1.3'
     compile 'ch.qos.logback:logback-classic:1.1.3'
+    compile 'net.logstash.logback:logstash-logback-encoder:4.6'
     compile 'org.slf4j:slf4j-api:1.7.12'
     compile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.0-beta-4584'
     compile 'io.vertx:vertx-tcp-eventbus-bridge:3.2.0'

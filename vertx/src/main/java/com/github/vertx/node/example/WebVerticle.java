@@ -1,8 +1,6 @@
 package com.github.vertx.node.example;
 
 import io.vertx.core.AbstractVerticle;
-import io.vertx.core.AsyncResult;
-import io.vertx.core.Handler;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.sockjs.BridgeOptions;
@@ -27,6 +25,7 @@ public class WebVerticle extends AbstractVerticle {
     @Override
     public void start() {
 
+        logger.info("Starting up WebVerticle");
 
         /* Create the hello world service. */
         final HelloWorldServiceImpl helloWorldService = new HelloWorldServiceImpl();
@@ -66,6 +65,10 @@ public class WebVerticle extends AbstractVerticle {
         vertx.createHttpServer()
                 .requestHandler(router::accept)
                 .listen(8080);
+
+
+        logger.info("WebVerticle was started!");
+
     }
 
     /**

@@ -29,9 +29,14 @@ class HelloWorldVerticle : AbstractVerticle() {
         try {
             val operation = HelloWorldOperations.valueOf(message.body().toString())
 
+            logger.info("HelloWorldVerticle dispatch message was called {} ", operation)
+
             /** Switch statement that handles various operations. */
             when (operation) {
-                HelloWorldOperations.SAY_HELLO_WORLD -> message.reply("HELLO WORLD FROM KOTLIN")
+                HelloWorldOperations.SAY_HELLO_WORLD -> {
+                    logger.info("HelloWorldVerticle HELLO WORLD FROM KOTLIN ")
+                    message.reply("HELLO WORLD FROM KOTLIN")
+                }
                 else -> {
                     logger.error("Unable to handle operation {}", operation)
                     message.reply("Unsupported operation")
