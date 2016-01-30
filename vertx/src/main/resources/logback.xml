@@ -1,7 +1,7 @@
 <configuration>
 
     <appender name="stash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>10.0.0.148:4560</destination>
+        <destination>10.0.0.62:4560</destination>
 
         <!-- encoder is required -->
         <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
